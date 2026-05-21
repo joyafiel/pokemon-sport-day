@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pokemon 後台管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5EFE6;
+    --bg2: #EDE4D8;
+    --card: #FDFAF6;
+    --brown: #4A3728;
+    --brown-light: #7A6255;
+    --orange: #D4845A;
+    --orange-light: #E8A882;
+    --border: #DDD5C8;
+    --text: #3A2E25;
+    --muted: #9A8878;
+    --green: #6A9E7A;
+    --red: #C4604A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .header { background: var(--brown); padding: 24px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: #FDF8F2; letter-spacing: 0.05em; }
+  .header-sub { font-size: 12px; color: rgba(253,248,242,0.55); margin-top: 3px; }
+  .header-badge { background: rgba(212,132,90,0.25); color: var(--orange-light); font-size: 11px; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.05em; }
+
+  .content { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+  .section-title { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 600; color: var(--brown); margin-bottom: 10px; margin-top: 20px; letter-spacing: 0.05em; }
+  .section-title:first-child { margin-top: 0; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 6px; }
+  .stat-value { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; color: var(--brown); }
+  .stat-value.orange { color: var(--orange); }
+  .stat-value.green { color: var(--green); }
+
+  /* Form */
+  .form-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .img-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 4px; }
+  .img-upload { width: 88px; height: 88px; border-radius: 12px; background: var(--bg2); border: 1.5px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; overflow: hidden; transition: border-color 0.2s; }
+  .img-upload:hover { border-color: var(--orange-light); }
+  .img-upload img { width: 100%; height: 100%; object-fit: cover; }
+  .img-upload-hint { font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 0.05em; }
+  .form-fields { flex: 1; }
+  label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; margin-top: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  label:first-child { margin-top: 0; }
+  input, select { width: 100%; padding: 10px 13px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC'; transition: border-color 0.2s; }
+  input:focus, select:focus { outline: none; border-color: var(--orange-light); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .btn-save { width: 100%; margin-top: 16px; padding: 12px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 12px; font-size: 14px; font-family: 'Noto Sans TC'; font-weight: 500; cursor: pointer; letter-spacing: 0.08em; transition: background 0.2s; }
+  .btn-save:hover { background: var(--brown-light); }
+  .btn-reset { width: 100%; margin-top: 8px; padding: 10px; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; font-family: 'Noto Sans TC'; cursor: pointer; }
+
+  /* Product list */
+  .list-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .product-row { display: flex; gap: 12px; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--bg2); transition: background 0.15s; }
+  .product-row:last-child { border-bottom: none; }
+  .product-row:hover { background: var(--bg); }
+  .product-thumb { width: 52px; height: 52px; border-radius: 10px; background: var(--bg2); flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .product-info { flex: 1; min-width: 0; }
+  .product-name { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--brown); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .product-meta { font-size: 12px; color: var(--muted); margin-top: 3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .product-price { color: var(--orange); font-weight: 500; }
+  .stock-pill { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; }
+  .pill-ok { background: #EAF3ED; color: #4A8A5A; }
+  .pill-low { background: #FFF4EC; color: #C4703A; }
+  .pill-out { background: #F5ECEC; color: var(--red); }
+  .cost-note { font-size: 11px; color: var(--muted); }
+  .actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .btn-edit { padding: 6px 12px; background: var(--bg2); border: none; border-radius: 8px; font-size: 12px; color: var(--brown-light); cursor: pointer; font-family: 'Noto Sans TC'; }
+  .btn-del { padding: 6px 12px; background: #F5ECEC; border: none; border-radius: 8px; font-size: 12px; color: var(--red); cursor: pointer; font-family: 'Noto Sans TC'; }
+  .empty { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
+
+  /* Toast */
+  .toast { display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--brown); color: #FDF8F2; padding: 11px 24px; border-radius: 24px; font-size: 13px; z-index: 200; white-space: nowrap; letter-spacing: 0.05em; }
+  .toast.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>後台管理</h1>
+    <div class="header-sub">Pokemon Sport Day</div>
+  </div>
+  <div class="header-badge" id="header-badge">載入中</div>
+</div>
+
+<div class="content">
+
+  <div class="section-title">商品總覽</div>
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">商品數</div>
+      <div class="stat-value" id="stat-total">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">可購買</div>
+      <div class="stat-value green" id="stat-avail">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">售完</div>
+      <div class="stat-value orange" id="stat-out">—</div>
+    </div>
+  </div>
+
+  <div class="section-title" id="form-title">新增商品</div>
+  <div class="form-card">
+    <div class="img-row">
+      <div class="img-upload" id="img-upload" onclick="document.getElementById('img-input').click()">
+        <div id="img-inner">
+          <div style="font-size:28px;">📷</div>
+          <div class="img-upload-hint">點擊上傳</div>
+        </div>
+      </div>
+      <div class="form-fields">
+        <label>商品名稱</label>
+        <input type="text" id="f-name" placeholder="例：皮卡丘公仔 20cm" />
+      </div>
+    </div>
+    <input type="file" id="img-input" accept="image/*" style="display:none" />
+    <div class="row2">
+      <div>
+        <label>售價 NT$</label>
+        <input type="number" id="f-price" placeholder="490" />
+      </div>
+      <div>
+        <label>成本 NT$（不公開）</label>
+        <input type="number" id="f-cost" placeholder="200" />
+      </div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>庫存數量</label>
+        <input type="number" id="f-stock" placeholder="10" />
+      </div>
+      <div>
+        <label>備註標籤</label>
+        <input type="text" id="f-note" placeholder="現貨 / 限量 / 預購" />
+      </div>
+    </div>
+    <input type="hidden" id="f-id" />
+    <input type="hidden" id="f-img" />
+    <button class="btn-save" onclick="saveProduct()" id="btn-save">儲存商品</button>
+    <button class="btn-reset" onclick="resetForm()">清除重填</button>
+  </div>
+
+  <div class="section-title">商品列表 <span id="list-count" style="font-size:13px;color:var(--muted);font-weight:400;font-family:'Noto Sans TC';"></span></div>
+  <div class="list-card" id="product-list">
+    <div class="empty">載入中...</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let products = [];
+
+document.getElementById('img-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const url = ev.target.result;
+    document.getElementById('f-img').value = url;
+    document.getElementById('img-inner').innerHTML = '<img src="' + url + '" style="width:88px;height:88px;object-fit:cover;" />';
+  };
+  reader.readAsDataURL(file);
+});
+
+async function loadProducts() {
+  try {
+    const res = await fetch('/api/products');
+    products = await res.json();
+  } catch(e) { products = []; }
+  updateStats();
+  renderList();
+}
+
+function updateStats() {
+  const total = products.length;
+  const avail = products.filter(p => p.stock > 0).length;
+  const out = products.filter(p => p.stock <= 0).length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-avail').textContent = avail;
+  document.getElementById('stat-out').textContent = out;
+  document.getElementById('header-badge').textContent = total + ' 件商品';
+  document.getElementById('list-count').textContent = '(' + total + ')';
+}
+
+function renderList() {
+  const el = document.getElementById('product-list');
+  if (!products.length) { el.innerHTML = '<div class="empty">尚未新增任何商品</div>'; return; }
+  el.innerHTML = products.map(p => {
+    const pillClass = p.stock <= 0 ? 'pill-out' : p.stock <= 3 ? 'pill-low' : 'pill-ok';
+    const pillText = p.stock <= 0 ? '售完' : p.stock <= 3 ? '剩 ' + p.stock + ' 件' : '庫存 ' + p.stock;
+    return `<div class="product-row">
+      <div class="product-thumb">${p.image ? '<img src="' + p.image + '" />' : '🎮'}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">
+          <span class="product-price">NT$ ${p.price.toLocaleString()}</span>
+          <span class="stock-pill ${pillClass}">${pillText}</span>
+          ${p.cost ? '<span class="cost-note">成本 ' + p.cost + '</span>' : ''}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-edit" onclick="editProduct('${p.id}')">編輯</button>
+        <button class="btn-del" onclick="deleteProduct('${p.id}')">刪除</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('form-title').textContent = '編輯商品';
+  document.getElementById('f-id').value = p.id;
+  document.getElementById('f-name').value = p.name;
+  document.getElementById('f-price').value = p.price;
+  document.getElementById('f-cost').value = p.cost || '';
+  document.getElementById('f-stock').value = p.stock;
+  document.getElementById('f-note').value = p.note || '';
+  document.getElementById('f-img').value = p.image || '';
+  if (p.image) {
+    document.getElementById('img-inner').innerHTML = '<img src="' + p.image + '" style="width:88px;height:88px;object-fit:cover;" />';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function deleteProduct(id) {
+  if (!confirm('確定要刪除這個商品？')) return;
+  const p = products.find(x => x.id === id);
+  await fetch('/api/save-product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product: p, action: 'delete' })
+  });
+  showToast('已刪除商品');
+  loadProducts();
+}
+
+async function saveProduct() {
+  const name = document.getElementById('f-name').value.trim();
+  const price = parseInt(document.getElementById('f-price').value) || 0;
+  const cost = parseInt(document.getElementById('f-cost').value) || 0;
+  const stock = parseInt(document.getElementById('f-stock').value) || 0;
+  const note = document.getElementById('f-note').value.trim();
+  const image = document.getElementById('f-img').value || '';
+  const id = document.getElementById('f-id').value;
+  if (!name || !price) { alert('請填寫商品名稱和售價'); return; }
+  const product = { name, price, cost, stock, note, image };
+  if (id) product.id = id;
+  const btn = document.getElementById('btn-save');
+  btn.textContent = '儲存中...'; btn.disabled = true;
+  await fetch('/api/save-product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product, action: id ? 'edit' : 'add' })
+  });
+  showToast(id ? '商品已更新 ✓' : '商品已新增 ✓');
+  resetForm();
+  loadProducts();
+  btn.textContent = '儲存商品'; btn.disabled = false;
+}
+
+function resetForm() {
+  document.getElementById('form-title').textContent = '新增商品';
+  ['f-id','f-name','f-price','f-cost','f-stock','f-note','f-img'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('img-inner').innerHTML = '<div style="font-size:28px;">📷</div><div class="img-upload-hint">點擊上傳</div>';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadProducts();
+</script>
+</body>
+</html>
