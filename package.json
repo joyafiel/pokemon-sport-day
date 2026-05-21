@@ -1,0 +1,25 @@
+{
+  "name": "pokemon-sport-day",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joyafiel/pokemon-sport-day.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/joyafiel/pokemon-sport-day/issues"
+  },
+  "homepage": "https://github.com/joyafiel/pokemon-sport-day#readme",
+  "dependencies": {
+    "@vercel/blob": "^2.4.0"
+  }
+  "type": "module"
+}
