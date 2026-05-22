@@ -7,79 +7,83 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F5EFE6;
-    --bg2: #EDE4D8;
-    --card: #FDFAF6;
-    --brown: #4A3728;
-    --brown-light: #7A6255;
-    --orange: #D4845A;
-    --orange-light: #E8A882;
-    --border: #DDD5C8;
-    --text: #3A2E25;
-    --muted: #9A8878;
+    --bg: #F5EFE6; --bg2: #EDE4D8; --card: #FDFAF6;
+    --brown: #4A3728; --brown-light: #7A6255;
+    --orange: #D4845A; --orange-light: #E8A882;
+    --border: #DDD5C8; --text: #3A2E25; --muted: #9A8878;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  /* Header */
-  .header { background: var(--brown); padding: 32px 20px 28px; text-align: center; position: relative; overflow: hidden; }
+  .header { background: var(--brown); padding: 28px 20px 24px; text-align: center; position: relative; overflow: hidden; }
   .header::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.04); }
   .header::after { content: ''; position: absolute; bottom: -30px; left: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(212,132,90,0.15); }
-  .header-tag { display: inline-block; font-size: 11px; letter-spacing: 0.15em; color: var(--orange-light); background: rgba(212,132,90,0.2); padding: 4px 14px; border-radius: 20px; margin-bottom: 12px; font-family: 'Noto Sans TC'; font-weight: 300; }
-  .header h1 { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; color: #FDF8F2; letter-spacing: 0.05em; line-height: 1.3; }
-  .header-sub { font-size: 13px; color: rgba(253,248,242,0.6); margin-top: 8px; font-weight: 300; letter-spacing: 0.05em; }
-
-  /* Filter */
-  .filter-bar { padding: 16px 16px 8px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .header-tag { display: inline-block; font-size: 11px; letter-spacing: 0.15em; color: var(--orange-light); background: rgba(212,132,90,0.2); padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; }
+  .header h1 { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; color: #FDF8F2; letter-spacing: 0.05em; }
+  .header-sub { font-size: 13px; color: rgba(253,248,242,0.6); margin-top: 6px; }
+  .filter-bar { padding: 14px 16px 6px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
   .filter-bar::-webkit-scrollbar { display: none; }
-  .filter-btn { flex-shrink: 0; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--card); font-size: 13px; color: var(--brown-light); cursor: pointer; font-family: 'Noto Sans TC'; transition: all 0.2s; white-space: nowrap; }
+  .filter-btn { flex-shrink: 0; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--card); font-size: 13px; color: var(--brown-light); cursor: pointer; font-family: 'Noto Sans TC'; transition: all 0.2s; }
   .filter-btn.active { background: var(--brown); color: #FDF8F2; border-color: var(--brown); }
-
-  /* Grid */
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px 16px 32px; max-width: 480px; margin: 0 auto; }
-
-  /* Card */
-  .card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.2s; }
-  .card:active { transform: scale(0.98); }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px 16px 100px; max-width: 480px; margin: 0 auto; }
+  .card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
   .card.sold-out { opacity: 0.65; }
   .card-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--bg2); display: block; }
-  .card-img-placeholder { width: 100%; aspect-ratio: 1; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 52px; }
+  .card-img-placeholder { width: 100%; aspect-ratio: 1; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 48px; }
   .card-body { padding: 12px; }
-  .card-tag { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; margin-bottom: 7px; letter-spacing: 0.05em; font-weight: 500; }
+  .card-tag { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; margin-bottom: 6px; font-weight: 500; }
   .tag-normal { background: #F0E8DF; color: var(--orange); }
   .tag-limited { background: #FFF0EA; color: #C4603A; border: 1px solid #F0C4B0; }
   .tag-soldout { background: #EDEBE8; color: var(--muted); }
-  .card-name { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--brown); line-height: 1.45; margin-bottom: 8px; }
-  .card-price { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: var(--orange); }
-  .card-soldout-price { font-size: 16px; color: var(--muted); font-weight: 400; text-decoration: line-through; }
+  .card-name { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--brown); line-height: 1.45; margin-bottom: 6px; }
+  .card-price { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; color: var(--orange); }
+  .card-soldout-price { font-size: 15px; color: var(--muted); text-decoration: line-through; }
   .stock-info { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .btn-order { width: 100%; margin-top: 10px; padding: 9px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 10px; font-size: 13px; font-family: 'Noto Sans TC'; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s; }
-  .btn-order:hover { background: var(--brown-light); }
-  .btn-order:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+  .qty-control { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg2); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--brown); font-family: 'Noto Sans TC'; flex-shrink: 0; }
+  .qty-num { font-size: 15px; font-weight: 500; color: var(--brown); min-width: 20px; text-align: center; }
+  .btn-add-cart { flex: 1; padding: 7px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 10px; font-size: 12px; font-family: 'Noto Sans TC'; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; }
+  .btn-add-cart:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+  .btn-add-cart.in-cart { background: var(--orange); }
 
-  /* Modal */
+  /* 購物車浮動按鈕 */
+  .cart-fab { position: fixed; bottom: 24px; right: 20px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 28px; padding: 12px 20px; font-size: 14px; font-family: 'Noto Sans TC'; font-weight: 500; cursor: pointer; display: none; align-items: center; gap: 8px; z-index: 50; box-shadow: 0 4px 16px rgba(74,55,40,0.3); }
+  .cart-fab.show { display: flex; }
+  .cart-count { background: var(--orange); color: #fff; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+  /* 購物車 Modal */
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(58,46,37,0.5); z-index: 100; align-items: flex-end; justify-content: center; }
   .modal-bg.open { display: flex; }
-  .modal { background: var(--card); border-radius: 24px 24px 0 0; padding: 28px 24px 40px; width: 100%; max-width: 480px; }
-  .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 4px; margin: 0 auto 20px; }
-  .modal h2 { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; color: var(--brown); margin-bottom: 4px; }
-  .modal-product { font-size: 13px; color: var(--orange); font-weight: 500; margin-bottom: 20px; }
-  .modal label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 5px; margin-top: 14px; letter-spacing: 0.05em; }
-  .modal input, .modal select { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC'; }
-  .modal input:focus, .modal select:focus { outline: none; border-color: var(--orange-light); }
-  .modal-btns { display: flex; gap: 10px; margin-top: 22px; }
-  .btn-cancel { flex: 1; padding: 12px; background: var(--bg2); border: none; border-radius: 12px; font-size: 14px; color: var(--brown-light); cursor: pointer; font-family: 'Noto Sans TC'; }
-  .btn-submit { flex: 2; padding: 12px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC'; letter-spacing: 0.05em; }
+  .modal { background: var(--card); border-radius: 24px 24px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+  .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 4px; margin: 0 auto 18px; }
+  .modal h2 { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; color: var(--brown); margin-bottom: 16px; }
+  .cart-item { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--bg2); }
+  .cart-item:last-of-type { border-bottom: none; }
+  .cart-item-img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: var(--bg2); flex-shrink: 0; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name { font-size: 13px; font-weight: 500; color: var(--brown); }
+  .cart-item-price { font-size: 12px; color: var(--orange); margin-top: 2px; }
+  .cart-item-remove { font-size: 18px; color: var(--muted); cursor: pointer; padding: 4px; background: none; border: none; }
+  .cart-total { background: var(--bg2); border-radius: 12px; padding: 12px 16px; margin: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+  .cart-total-label { font-size: 14px; color: var(--brown-light); }
+  .cart-total-amount { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: var(--orange); }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .form-title { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 600; color: var(--brown); margin-bottom: 12px; }
+  label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; margin-top: 12px; letter-spacing: 0.05em; }
+  label:first-of-type { margin-top: 0; }
+  input { width: 100%; padding: 10px 13px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC'; }
+  input:focus { outline: none; border-color: var(--orange-light); }
+  .btn-submit { width: 100%; margin-top: 18px; padding: 13px; background: var(--brown); color: #FDF8F2; border: none; border-radius: 12px; font-size: 14px; font-family: 'Noto Sans TC'; font-weight: 500; cursor: pointer; letter-spacing: 0.08em; }
+  .btn-cancel { width: 100%; margin-top: 8px; padding: 10px; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; font-family: 'Noto Sans TC'; cursor: pointer; }
 
-  /* Toast */
-  .toast { display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--brown); color: #FDF8F2; padding: 11px 24px; border-radius: 24px; font-size: 13px; z-index: 200; white-space: nowrap; letter-spacing: 0.05em; }
+  /* 聯絡資訊 */
+  .footer { padding: 0 16px 40px; max-width: 480px; margin: 0 auto; }
+  .footer-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .footer-title { font-family: 'Noto Serif TC', serif; font-size: 14px; color: var(--brown); font-weight: 600; margin-bottom: 10px; }
+  .footer-row { font-size: 13px; color: var(--muted); line-height: 1.8; }
+  .footer-row a { color: var(--orange); text-decoration: none; }
+
+  .toast { display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--brown); color: #FDF8F2; padding: 10px 20px; border-radius: 24px; font-size: 13px; z-index: 200; white-space: nowrap; }
   .toast.show { display: block; }
-
-  /* Footer */
-  .footer { text-align: center; padding: 0 16px 40px; }
-  .footer-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-  .footer-title { font-family: 'Noto Serif TC', serif; font-size: 14px; color: var(--brown); font-weight: 600; margin-bottom: 6px; }
-  .footer-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -101,32 +105,40 @@
 
 <div class="footer">
   <div class="footer-card">
-    <div class="footer-title">詢問 & 訂購</div>
-    <div class="footer-sub" id="footer-contact">有任何問題歡迎 LINE 私訊</div>
+    <div class="footer-title">聯絡我們</div>
+    <div class="footer-row">
+      🔗 <a href="https://bit.ly/4oFXrlg">加入 LINE 社群</a>（密碼：16888）<br>
+      💬 LINE 客服：<a href="https://lin.ee/nr5ka4S">@755kygtt</a>
+    </div>
   </div>
 </div>
+
+<button class="cart-fab" id="cart-fab" onclick="openCart()">
+  <span>查看購物車</span>
+  <span class="cart-count" id="cart-count">0</span>
+</button>
 
 <div class="modal-bg" id="modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <h2>填寫訂購資料</h2>
-    <div class="modal-product" id="modal-info"></div>
-    <label>你的名字</label>
-    <input type="text" id="order-name" placeholder="例：小美" />
-    <label>LINE ID 或手機號碼</label>
-    <input type="text" id="order-contact" placeholder="@yourline" />
-    <label>數量</label>
-    <select id="order-qty">
-      <option value="1">1 件</option>
-      <option value="2">2 件</option>
-      <option value="3">3 件</option>
-    </select>
-    <label>備註（選填）</label>
-    <input type="text" id="order-note" placeholder="例：要禮盒包裝" />
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">取消</button>
-      <button class="btn-submit" onclick="submitOrder()">確認訂購</button>
+    <h2>購物車</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">
+      <span class="cart-total-label">合計</span>
+      <span class="cart-total-amount" id="cart-total">NT$ 0</span>
     </div>
+    <div class="divider"></div>
+    <div class="form-title">填寫訂購資料</div>
+    <label>本名</label>
+    <input type="text" id="f-realname" placeholder="例：林小美" />
+    <label>LINE 名稱</label>
+    <input type="text" id="f-linename" placeholder="例：小美🌸" />
+    <label>社群暱稱</label>
+    <input type="text" id="f-nickname" placeholder="例：皮卡丘愛好者" />
+    <label>手機號碼</label>
+    <input type="tel" id="f-phone" placeholder="例：0912345678" />
+    <button class="btn-submit" onclick="submitOrder()">確認送出訂單</button>
+    <button class="btn-cancel" onclick="closeCart()">繼續選購</button>
   </div>
 </div>
 
@@ -134,11 +146,11 @@
 
 <script>
 let allProducts = [];
-let selectedProduct = null;
+let cart = {};
 
 async function loadProducts() {
   try {
-    const res = await fetch('/api/products');
+    const res = await fetch('/api/products?t=' + Date.now());
     allProducts = await res.json();
   } catch(e) { allProducts = []; }
   const total = allProducts.length;
@@ -165,6 +177,7 @@ function renderGrid(products) {
   grid.innerHTML = products.map(p => {
     const soldOut = p.stock <= 0;
     const isLimited = p.note && p.note.includes('限量');
+    const inCart = cart[p.id] || 0;
     let tagHtml = '';
     if (soldOut) tagHtml = '<span class="card-tag tag-soldout">售完</span>';
     else if (isLimited) tagHtml = '<span class="card-tag tag-limited">限量 ' + p.stock + ' 件</span>';
@@ -178,55 +191,124 @@ function renderGrid(products) {
           ? `<div class="card-soldout-price">NT$ ${p.price.toLocaleString()}</div>`
           : `<div class="card-price">NT$ ${p.price.toLocaleString()}</div>
              ${p.stock <= 5 && !isLimited ? `<div class="stock-info">僅剩 ${p.stock} 件</div>` : ''}`}
-        <button class="btn-order" ${soldOut ? 'disabled' : ''} onclick="openModal('${p.id}')">
-          ${soldOut ? '已售完' : '我要訂購'}
-        </button>
+        ${!soldOut ? `
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('${p.id}', -1)">−</button>
+          <span class="qty-num" id="qty-${p.id}">${inCart}</span>
+          <button class="qty-btn" onclick="changeQty('${p.id}', 1)">+</button>
+          <button class="btn-add-cart ${inCart > 0 ? 'in-cart' : ''}" id="cart-btn-${p.id}" onclick="addToCart('${p.id}')">
+            ${inCart > 0 ? '已加入 ✓' : '加入購物車'}
+          </button>
+        </div>` : ''}
       </div>
     </div>`;
   }).join('');
 }
 
-function openModal(id) {
-  selectedProduct = allProducts.find(p => p.id === id);
-  document.getElementById('modal-info').textContent = selectedProduct.name + '・NT$ ' + selectedProduct.price.toLocaleString();
-  ['order-name','order-contact','order-note'].forEach(i => document.getElementById(i).value = '');
-  document.getElementById('order-qty').value = '1';
+function changeQty(id, delta) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  const current = parseInt(document.getElementById('qty-' + id).textContent) || 0;
+  const max = Math.min(2, p.stock);
+  const newQty = Math.max(0, Math.min(max, current + delta));
+  document.getElementById('qty-' + id).textContent = newQty;
+}
+
+function addToCart(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  const qty = parseInt(document.getElementById('qty-' + id).textContent) || 0;
+  if (qty === 0) { showToast('請先選擇數量'); return; }
+  cart[id] = qty;
+  updateCartFab();
+  const btn = document.getElementById('cart-btn-' + id);
+  btn.textContent = '已加入 ✓';
+  btn.classList.add('in-cart');
+  showToast(p.name + ' 已加入購物車');
+}
+
+function updateCartFab() {
+  const total = Object.values(cart).reduce((a, b) => a + b, 0);
+  const fab = document.getElementById('cart-fab');
+  document.getElementById('cart-count').textContent = total;
+  if (total > 0) fab.classList.add('show');
+  else fab.classList.remove('show');
+}
+
+function openCart() {
+  const items = Object.entries(cart).filter(([id, qty]) => qty > 0);
+  if (!items.length) { showToast('購物車是空的'); return; }
+  let html = '';
+  let total = 0;
+  items.forEach(([id, qty]) => {
+    const p = allProducts.find(x => x.id === id);
+    if (!p) return;
+    const subtotal = p.price * qty;
+    total += subtotal;
+    html += `<div class="cart-item">
+      ${p.image ? `<img class="cart-item-img" src="${p.image}" />` : `<div class="cart-item-img" style="display:flex;align-items:center;justify-content:center;font-size:20px;">🎮</div>`}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-price">NT$ ${p.price.toLocaleString()} × ${qty} = NT$ ${subtotal.toLocaleString()}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${id}')">✕</button>
+    </div>`;
+  });
+  document.getElementById('cart-items').innerHTML = html;
+  document.getElementById('cart-total').textContent = 'NT$ ' + total.toLocaleString();
   document.getElementById('modal').classList.add('open');
 }
 
-function closeModal() {
+function removeFromCart(id) {
+  delete cart[id];
+  updateCartFab();
+  openCart();
+  if (Object.keys(cart).length === 0) closeCart();
+  renderGrid(allProducts);
+}
+
+function closeCart() {
   document.getElementById('modal').classList.remove('open');
 }
 
 async function submitOrder() {
-  const name = document.getElementById('order-name').value.trim();
-  const contact = document.getElementById('order-contact').value.trim();
-  const qty = parseInt(document.getElementById('order-qty').value);
-  const note = document.getElementById('order-note').value.trim();
-  if (!name || !contact) { alert('請填寫名字和聯絡方式'); return; }
+  const realname = document.getElementById('f-realname').value.trim();
+  const linename = document.getElementById('f-linename').value.trim();
+  const nickname = document.getElementById('f-nickname').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!realname || !phone) { alert('請填寫本名和手機號碼'); return; }
+
+  const items = Object.entries(cart).filter(([id, qty]) => qty > 0).map(([id, qty]) => {
+    const p = allProducts.find(x => x.id === id);
+    return { productId: id, productName: p.name, price: p.price, qty };
+  });
+
   const btn = document.querySelector('.btn-submit');
   btn.disabled = true; btn.textContent = '送出中...';
+
   try {
     const res = await fetch('/api/order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId: selectedProduct.id, productName: selectedProduct.name, price: selectedProduct.price, qty, name, contact, note })
+      body: JSON.stringify({ items, realname, linename, nickname, phone })
     });
     const data = await res.json();
     if (data.success) {
-      closeModal();
-      showToast('訂購成功！我們會盡快聯絡你 ✓');
-      selectedProduct.stock -= qty;
+      cart = {};
+      updateCartFab();
+      closeCart();
       renderGrid(allProducts);
+      showToast('訂單送出成功！我們會盡快聯絡你 ✓');
+      ['f-realname','f-linename','f-nickname','f-phone'].forEach(i => document.getElementById(i).value = '');
     } else { alert(data.message || '送出失敗，請再試一次'); }
   } catch(e) { alert('網路錯誤，請再試一次'); }
-  btn.disabled = false; btn.textContent = '確認訂購';
+  btn.disabled = false; btn.textContent = '確認送出訂單';
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 loadProducts();
