@@ -20,12 +20,23 @@ export default async function handler(req, res) {
       }))
     });
 
-    // 不等 GAS 回應，直接送出後回傳成功
-    fetch(scriptUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload
-    }).catch(e => console.error('GAS error:', e));
+    // 5 秒 timeout，GAS 通常 1 秒內回應
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+    try {
+      await fetch(scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        signal: controller.signal
+      });
+    } catch(fetchErr) {
+      // GAS 超時也沒關係，資料通常已經寫進去了
+      console.log('GAS fetch timeout or error:', fetchErr.message);
+    } finally {
+      clearTimeout(timeout);
+    }
 
     return res.status(200).json({ success: true });
 
