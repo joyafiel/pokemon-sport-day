@@ -39,7 +39,4 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true });
 
   } catch(e) {
-    console.error('order error:', e);
-    return res.status(500).json({ success: false, message: '系統錯誤' });
-  }
-}
+    console.e
