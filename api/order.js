@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     });
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
+    const timeout = setTimeout(() => controller.abort(), 8000);
 
     try {
       await fetch(scriptUrl, {
@@ -30,8 +30,17 @@ export default async function handler(req, res) {
         body: payload,
         signal: controller.signal
       });
+      console.log('GAS success');
     } catch(fetchErr) {
-      console.log('GAS fetch timeout or error:', fetchErr.message);
+      console.log('GAS timeout, retrying without signal...');
+      // 第二次嘗試，不等回應
+      fetch(scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload
+      }).catch(() => {});
+      // 等一秒讓請求送出
+      await new Promise(r => setTimeout(r, 1000));
     } finally {
       clearTimeout(timeout);
     }
