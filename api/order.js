@@ -20,7 +20,6 @@ export default async function handler(req, res) {
       }))
     });
 
-    // 5 秒 timeout，GAS 通常 1 秒內回應
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
 
@@ -32,7 +31,6 @@ export default async function handler(req, res) {
         signal: controller.signal
       });
     } catch(fetchErr) {
-      // GAS 超時也沒關係，資料通常已經寫進去了
       console.log('GAS fetch timeout or error:', fetchErr.message);
     } finally {
       clearTimeout(timeout);
